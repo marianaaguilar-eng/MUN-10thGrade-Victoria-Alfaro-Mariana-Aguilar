@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Spaces | Golden Valley School</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        titleBlue: '#12519C',
+                        accentBlue: '#27A0DB',
+                        highlightYellow: '#F6C401',
+                    },
+                    fontFamily: {
+                        sans: ['Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #333333;
+        }
+        
+        .heading-color {
+            color: #12519C;
+        }
+        
+        .accent-color {
+            color: #27A0DB;
+        }
+
+        .bg-accent {
+            background-color: #27A0DB;
+        }
+
+        .bg-title {
+            background-color: #12519C;
+        }
+
+        .bg-highlight {
+            background-color: #F6C401;
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(18, 81, 156, 0.08);
+        }
+
+        /* Responsive chart wrappers */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- SECTION 1: HEADER -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Branding Logo & Title -->
+                <a href="#home" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-full bg-titleBlue/10 flex items-center justify-center text-titleBlue group-hover:bg-titleBlue group-hover:text-white transition-colors duration-200">
+                        <!-- Shield/Heart SVG Icon -->
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl sm:text-2xl font-bold text-titleBlue tracking-tight leading-none">Safe Spaces</span>
+                        <span class="text-xs font-semibold text-accentBlue tracking-wide uppercase mt-1">Golden Valley School</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex space-x-8 text-sm font-semibold text-gray-600">
+                    <a href="#home" class="hover:text-titleBlue transition-colors py-2 border-b-2 border-transparent hover:border-titleBlue">Home</a>
+                    <a href="#safe-space" class="hover:text-titleBlue transition-colors py-2 border-b-2 border-transparent hover:border-titleBlue">Safe Space</a>
+                    <a href="#about-us" class="hover:text-titleBlue transition-colors py-2 border-b-2 border-transparent hover:border-titleBlue">About Us</a>
+                    <a href="#dashboard" class="hover:text-titleBlue transition-colors py-2 border-b-2 border-transparent hover:border-titleBlue">Dashboard</a>
+                    <a href="#get-help" class="px-4 py-2 rounded-md bg-accentBlue text-white hover:bg-titleBlue transition-colors shadow-sm">Get Help</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-titleBlue hover:bg-gray-100 focus:outline-none" aria-label="Toggle Navigation">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <a href="#home" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-700 hover:text-titleBlue hover:bg-gray-50">Home</a>
+            <a href="#safe-space" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-700 hover:text-titleBlue hover:bg-gray-50">Safe Space</a>
+            <a href="#about-us" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-700 hover:text-titleBlue hover:bg-gray-50">About Us</a>
+            <a href="#dashboard" class="block px-3 py-2 rounded-md text-base font-semibold text-gray-700 hover:text-titleBlue hover:bg-gray-50">Dashboard</a>
+            <a href="#get-help" class="block text-center px-4 py-2.5 rounded-md bg-accentBlue text-white font-semibold hover:bg-titleBlue transition-colors mt-2">Get Help</a>
+        </div>
+
+        <!-- Decorative 3-Color Horizontal Stripe Bar -->
+        <div class="w-full h-1.5 flex">
+            <div class="w-1/3 bg-title"></div>
+            <div class="w-1/3 bg-accent"></div>
+            <div class="w-1/3 bg-highlight"></div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- SECTION 2: HERO SECTION -->
+        <section id="home" class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-block px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-titleBlue bg-highlight/30 rounded-full mb-4">
+                    School Wellbeing & Safety Initiative
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-titleBlue tracking-tight leading-none mb-6">
+                    Stop Bullying!
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 leading-relaxed font-normal">
+                    Promoting kindness, respect, and emotional safety across Golden Valley School. Every student deserves a safe, supportive, and welcoming community to thrive in.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <a href="#get-help" class="inline-flex items-center px-8 py-4 rounded-full text-lg font-bold text-white bg-accentBlue hover:bg-titleBlue transition-all transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl">
+                        <span>Get Help</span>
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Statistics Box: Pie Chart & Histogram -->
+            <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6 sm:p-8 card-shadow">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-titleBlue">Bullying Awareness & Insight</h2>
+                    <p class="text-sm text-gray-500 mt-1">Understanding school climate to foster better peer support</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <!-- Stat Chart 1: Types of Bullying (Pie Chart) -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <h3 class="text-lg font-bold text-titleBlue mb-4 text-center">Types of Bullying Experienced</h3>
+                        <div class="chart-container h-64 flex justify-center items-center">
+                            <canvas id="heroPieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Stat Chart 2: Incidents Across Grade Levels (Histogram/Bar Chart) -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <h3 class="text-lg font-bold text-titleBlue mb-4 text-center">Reports Across High School Grades</h3>
+                        <div class="chart-container h-64 flex justify-center items-center">
+                            <canvas id="heroHistogramChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: WHAT IS A SAFE SPACE -->
+        <section id="safe-space" class="py-16 bg-gradient-to-b from-white to-gray-50 border-t border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-titleBlue mb-4">
+                        What is a Safe Space?
+                    </h2>
+                    <div class="inline-block bg-accentBlue/10 px-6 py-2 rounded-full border border-accentBlue/20">
+                        <p class="text-xl font-semibold text-titleBlue">
+                            "A space where you can be yourself."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Three Key Sign Feature Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 card-shadow text-center flex flex-col items-center hover:border-accentBlue/40 transition-colors">
+                        <div class="w-16 h-16 rounded-full bg-highlight/20 text-titleBlue flex items-center justify-center mb-6">
+                            <!-- Cheerful Smiley Icon -->
+                            <svg class="w-10 h-10 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path stroke-linecap="round" d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                <line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-titleBlue mb-3">You feel happy</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            An encouraging environment that lifts your spirits, fosters positive mindsets, and supports your personal growth every day.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 card-shadow text-center flex flex-col items-center hover:border-accentBlue/40 transition-colors">
+                        <div class="w-16 h-16 rounded-full bg-accentBlue/20 text-titleBlue flex items-center justify-center mb-6">
+                            <!-- Shield / Comfort Icon -->
+                            <svg class="w-10 h-10 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-titleBlue mb-3">You feel comfortable</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            Physical and emotional security where you can express your ideas, learn at your rhythm, and ask questions without fear.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 card-shadow text-center flex flex-col items-center hover:border-accentBlue/40 transition-colors">
+                        <div class="w-16 h-16 rounded-full bg-titleBlue/10 text-titleBlue flex items-center justify-center mb-6">
+                            <!-- Open Arms / Acceptance Icon -->
+                            <svg class="w-10 h-10 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-titleBlue mb-3">You don't feel judged</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">
+                            A community grounded in empathy, acceptance, and open dialogue that respects diverse backgrounds and perspectives.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: ABOUT US -->
+        <section id="about-us" class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-titleBlue mb-4">About Us</h2>
+                    <div class="w-16 h-1 bg-highlight mx-auto rounded-full"></div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 sm:p-10 card-shadow leading-relaxed text-gray-700">
+                    <p class="text-lg sm:text-xl font-normal text-gray-700 mb-8 text-center sm:text-left">
+                        This website helps by informing students about safe spaces and displaying high school bullying records. Our main purpose is to create awareness about bullying in schools and among teenagers, fostering a supportive environment for everyone at Golden Valley School.
+                    </p>
+
+                    <div class="space-y-4 pt-4 border-t border-gray-100">
+                        <h3 class="text-lg font-bold text-titleBlue uppercase tracking-wider mb-4">Our Commitment & Objectives</h3>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 flex-shrink-0 text-accentBlue">
+                                <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <p class="text-base text-gray-700"><strong class="text-titleBlue">Promote Open Communication:</strong> Empowering students to speak out against peer harassment and seek help early.</p>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 flex-shrink-0 text-accentBlue">
+                                <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <p class="text-base text-gray-700"><strong class="text-titleBlue">Provide Transparent Data:</strong> Sharing anonymized data to measure progress and target anti-bullying initiatives effectively.</p>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 flex-shrink-0 text-accentBlue">
+                                <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <p class="text-base text-gray-700"><strong class="text-titleBlue">Support Wellbeing:</strong> Connecting students directly with school counselors and trusted emergency networks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: DASHBOARD -->
+        <section id="dashboard" class="py-16 bg-gray-50 border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-titleBlue mb-2">
+                        Safe Space Analytics Dashboard
+                    </h2>
+                    <span class="inline-block px-3 py-1 bg-highlight/30 text-titleBlue text-xs font-bold rounded-full uppercase tracking-wider">
+                        Sample data
+                    </span>
+                    <p class="text-gray-500 text-sm mt-2">
+                        Visualizing our school community metrics and climate indicators.
+                    </p>
+                </div>
+
+                <!-- Three Dashboard Charts -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Chart 1: Pie Chart -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-titleBlue">Incident Resolution Status</h3>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Sample data</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4">Outcome of reported incidents in high school grades.</p>
+                        </div>
+                        <div class="chart-container h-64 flex items-center justify-center">
+                            <canvas id="dashPieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Histogram / Bar Chart -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-titleBlue">Workshops & Reports</h3>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Sample data</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4">Monthly awareness activities vs reported incidents.</p>
+                        </div>
+                        <div class="chart-container h-64 flex items-center justify-center">
+                            <canvas id="dashBarChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3: Line Graph -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-titleBlue">Bullying Reduction Trend</h3>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Sample data</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4">Multi-year reduction of reported bullying incidents.</p>
+                        </div>
+                        <div class="chart-container h-64 flex items-center justify-center">
+                            <canvas id="dashLineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: GET HELP -->
+        <section id="get-help" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="px-4 py-1.5 rounded-full bg-accentBlue/10 text-titleBlue font-bold text-xs uppercase tracking-wider">
+                        Support & Guidance
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-titleBlue mt-3 mb-4">
+                        Get Help & Wellness Support
+                    </h2>
+                    <p class="text-xl font-semibold text-gray-700 bg-amber-50 border border-amber-200 text-amber-900 py-3 px-6 rounded-xl inline-block">
+                        If you don't feel safe, talk to the counselor [Wellness].
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Contact Card 1: Email -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200 card-shadow flex items-start space-x-4">
+                        <div class="p-3 bg-titleBlue/10 rounded-xl text-titleBlue flex-shrink-0">
+                            <!-- Mail SVG Icon -->
+                            <svg class="w-8 h-8 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Counselor Email</span>
+                            <h3 class="text-lg font-bold text-titleBlue mt-0.5">Wellness Department</h3>
+                            <a href="mailto:wellness.correos@goldenvalley.ed.cr" class="text-accentBlue hover:underline font-semibold block mt-1 break-all">
+                                wellness.correos@goldenvalley.ed.cr
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Contact Card 2: Phone -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200 card-shadow flex items-start space-x-4">
+                        <div class="p-3 bg-accentBlue/10 rounded-xl text-accentBlue flex-shrink-0">
+                            <!-- Phone SVG Icon -->
+                            <svg class="w-8 h-8 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Direct School Line</span>
+                            <h3 class="text-lg font-bold text-titleBlue mt-0.5">Wellness Office</h3>
+                            <a href="tel:25071011" class="text-titleBlue hover:text-accentBlue font-bold text-xl block mt-1">
+                                25071011
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact Highlight Box -->
+                <div class="bg-red-50 border-2 border-red-300 rounded-2xl p-6 sm:p-8 text-center shadow-md">
+                    <div class="inline-flex items-center justify-center p-3 bg-red-100 text-red-600 rounded-full mb-3">
+                        <!-- Alert / Emergency Icon -->
+                        <svg class="w-8 h-8 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-red-900">Immediate Danger or Emergency?</h3>
+                    <p class="text-red-700 font-medium text-base mt-1 mb-4">
+                        If you or someone else is in immediate physical danger, please call national emergency services right away.
+                    </p>
+                    <div class="inline-block bg-red-600 text-white font-extrabold text-3xl px-8 py-3 rounded-xl shadow-lg">
+                        Emergency: 911
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SECTION 7: FOOTER -->
+    <footer class="bg-titleBlue text-white py-8 border-t-4 border-highlight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+                <div class="flex items-center space-x-2">
+                    <!-- SVG Small Logo Icon -->
+                    <svg class="w-5 h-5 fill-highlight" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    <span class="font-bold text-lg tracking-wide">Golden Valley School</span>
+                </div>
+                <p class="text-sm text-gray-200">
+                    Safe Spaces Student Initiative &bull; Golden Valley School, 2026
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking nav links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Chart.js Configurations & Initialization
+        window.addEventListener('DOMContentLoaded', ()0 => {
+            // Common Colors
+            const colorTitleBlue = '#12519C';
+            const colorAccentBlue = '#27A0DB';
+            const colorHighlightYellow = '#F6C401';
+            const colorLightBlue = '#72C2EC';
+            const colorGrayBg = '#E2E8F0';
+
+            // HERO CHART 1: Pie Chart - Types of Bullying Experienced
+            const ctxHeroPie = document.getElementById('heroPieChart').getContext('2d');
+            new Chart(ctxHeroPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Verbal', 'Social/Relational', 'Cyberbullying', 'Physical'],
+                    datasets: [{
+                        data: [42, 28, 20, 10],
+                        backgroundColor: [colorTitleBlue, colorAccentBlue, colorHighlightYellow, colorLightBlue],
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Arial', size: 11 } } }
+                    }
+                }
+            });
+
+            // HERO CHART 2: Histogram/Bar Chart - Incidents Reported Across High School Grades
+            const ctxHeroBar = document.getElementById('heroHistogramChart').getContext('2d');
+            new Chart(ctxHeroBar, {
+                type: 'bar',
+                data: {
+                    labels: ['7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade'],
+                    datasets: [{
+                        label: 'Reported Cases',
+                        data: [18, 22, 15, 12, 8, 5],
+                        backgroundColor: colorAccentBlue,
+                        hoverBackgroundColor: colorTitleBlue,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#F1F5F9' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // DASHBOARD CHART 1: Pie Chart - Incident Resolution Status (Sample data)
+            const ctxDashPie = document.getElementById('dashPieChart').getContext('2d');
+            new Chart(ctxDashPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Resolved', 'In Mediation', 'Under Investigation', 'Escalated to Wellness'],
+                    datasets: [{
+                        data: [65, 18, 12, 5],
+                        backgroundColor: [colorAccentBlue, colorHighlightYellow, colorTitleBlue, colorLightBlue],
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Arial', size: 11 } } }
+                    }
+                }
+            });
+
+            // DASHBOARD CHART 2: Bar Chart - Monthly Workshops & Awareness (Sample data)
+            const ctxDashBar = document.getElementById('dashBarChart').getContext('2d');
+            new Chart(ctxDashBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Workshops Held',
+                            data: [4, 6, 8, 7, 9, 10],
+                            backgroundColor: colorHighlightYellow,
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Reports Filed',
+                            data: [15, 12, 10, 8, 6, 4],
+                            backgroundColor: colorTitleBlue,
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#F1F5F9' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Arial', size: 11 } } }
+                    }
+                }
+            });
+
+            // DASHBOARD CHART 3: Line Graph - Bullying Reduction Trend Over Time (Sample data)
+            const ctxDashLine = document.getElementById('dashLineChart').getContext('2d');
+            new Chart(ctxDashLine, {
+                type: 'line',
+                data: {
+                    labels: ['2023 Q1', '2023 Q3', '2024 Q1', '2024 Q3', '2025 Q1', '2025 Q3', '2026 Q1'],
+                    datasets: [{
+                        label: 'Incidents per 100 Students',
+                        data: [14.2, 12.5, 10.1, 8.4, 6.2, 4.5, 3.1],
+                        borderColor: colorAccentBlue,
+                        backgroundColor: 'rgba(39, 160, 219, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: colorTitleBlue,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
